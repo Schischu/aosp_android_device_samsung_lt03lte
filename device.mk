@@ -20,19 +20,6 @@
 # Everything in this directory will become public
 
 
-ifeq ($(TARGET_PREBUILT_KERNEL),)
-LOCAL_KERNEL := device/samsung/lt03lte-kernel/zImage
-else
-LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-endif
-
-PRODUCT_COPY_FILES := \
-    $(LOCAL_KERNEL):kernel
-
-
-PRODUCT_COPY_FILES += \
-    device/samsung/lt03lte/google/bootanimation.zip:system/media/bootanimation.zip
-
 PRODUCT_COPY_FILES += \
     device/samsung/lt03lte/rootdir/etc/init.qcom.rc:root/init.qcom.rc \
     device/samsung/lt03lte/rootdir/etc/init.qcom.power.rc:root/init.qcom.power.rc \
@@ -58,8 +45,8 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
-    device/samsung/lt03lte/media_profiles.xml:system/etc/media_profiles.xml \
-    device/samsung/lt03lte/media_codecs.xml:system/etc/media_codecs.xml
+    device/samsung/lt03lte/media/media_profiles.xml:system/etc/media_profiles.xml \
+    device/samsung/lt03lte/media/media_codecs.xml:system/etc/media_codecs.xml
 
 PRODUCT_COPY_FILES += \
     device/samsung/lt03lte/bluetooth/bcmdhd.cal:system/etc/wifi/bcmdhd.cal
@@ -88,13 +75,10 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
     frameworks/native/data/etc/android.hardware.audio.low_latency.xml:system/etc/permissions/android.hardware.audio.low_latency.xml \
     frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml \
+    frameworks/native/data/etc/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml \
     \
     frameworks/native/data/etc/android.software.sip.xml:system/etc/permissions/android.software.sip.xml \
     frameworks/native/data/etc/android.software.webview.xml:system/etc/permissions/android.software.webview.xml \
-
-# For GPS
-PRODUCT_COPY_FILES += \
-    device/samsung/lt03lte/sec_config:system/etc/sec_config
 
 PRODUCT_COPY_FILES += \
     device/samsung/lt03lte/bluetooth/bt_vendor.conf:system/etc/bluetooth/bt_vendor.conf
@@ -121,9 +105,9 @@ DEVICE_PACKAGE_OVERLAYS := \
     device/samsung/lt03lte/overlay
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
-    $(LOCAL_PATH)/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf \
-    $(LOCAL_PATH)/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf
+    device/samsung/lt03lte/wifi/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
+    device/samsung/lt03lte/wifi/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf \
+    device/samsung/lt03lte/wifi/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf
 
 PRODUCT_PACKAGES := \
     libwpa_client \
@@ -192,9 +176,11 @@ PRODUCT_PACKAGES += \
     power.msm8974
 
 # GPS configuration
-#PRODUCT_COPY_FILES += \
-#    device/samsung/lt03lte/gps/gps.conf:system/etc/gps.conf \
-#    device/samsung/lt03lte/gps/sap.conf:system/etc/sap.conf
+PRODUCT_COPY_FILES += \
+    device/samsung/lt03lte/gps/sec_config:system/etc/gps/sec_config \
+    device/samsung/lt03lte/gps/gps.conf:system/etc/gps.conf \
+    device/samsung/lt03lte/gps/sap.conf:system/etc/sap.conf \
+    device/samsung/lt03lte/gps/flp.conf:system/etc/flp.conf
 
 # GPS
 #See proprietary packages
@@ -204,7 +190,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     lights.lt03lte
-
 
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
@@ -231,8 +216,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     copybit.msm8974
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.opengles.version=196608
+PRODUCT_PACKAGES += \
+    libstlport
 
 PRODUCT_PROPERTY_OVERRIDES += \
     qcom.hw.aac.encoder=true
@@ -255,24 +240,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     mm.enable.smoothstreaming=true
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sf.lcd_density=320
-
 #PRODUCT_PROPERTY_OVERRIDES += \
 #    persist.hwc.mdpcomp.enable=true
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.hwui.texture_cache_size=72 \
-    ro.hwui.layer_cache_size=48 \
-    ro.hwui.r_buffer_cache_size=8 \
-    ro.hwui.path_cache_size=32 \
-    ro.hwui.gradient_cache_size=1 \
-    ro.hwui.drop_shadow_cache_size=6 \
-    ro.hwui.texture_cache_flushrate=0.4 \
-    ro.hwui.text_small_cache_width=1024 \
-    ro.hwui.text_small_cache_height=1024 \
-    ro.hwui.text_large_cache_width=2048 \
-    ro.hwui.text_large_cache_height=1024
 
 # Ril sends only one RIL_UNSOL_CALL_RING, so set call_ring.multiple to false
 #PRODUCT_PROPERTY_OVERRIDES += \
@@ -313,14 +283,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.audio.fluence.voicerec=false \
     persist.audio.fluence.speaker=true
 
-# set default USB configuration
-# ORG
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp
-
 # Camera configuration
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     camera.disable_zsl_mode=1
+
+$(call inherit-product, vendor/google/google-vendor.mk)
 
 # setup dalvik vm configs.
 $(call inherit-product, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)

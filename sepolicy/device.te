@@ -15,11 +15,11 @@ type rtc, dev_type;
 
 type modem_block_device, dev_type;
 
-type system_block_device, dev_type;
-type recovery_block_device, dev_type;
-type userdata_block_device, dev_type;
-type metadata_block_device, dev_type;
-type cache_block_device, dev_type;
+#dup type system_block_device, dev_type;
+#dup type recovery_block_device, dev_type;
+#dup type userdata_block_device, dev_type;
+#dup type metadata_block_device, dev_type;
+#dup type cache_block_device, dev_type;
 
 # secure software download partition
 type ssd_block_device, dev_type;

@@ -19,16 +19,21 @@
 
 # Get the long list of APNs
 PRODUCT_COPY_FILES := device/sample/etc/apns-full-conf.xml:system/etc/apns-conf.xml
+PRODUCT_COPY_FILES += device/sample/etc/old-apns-conf.xml:system/etc/old-apns-conf.xml
 
 # Inherit from the common Open Source product configuration
+##$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
+##$(call inherit-product, $(SRC_TARGET_DIR)/product/telephony.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 
-PRODUCT_NAME := aosp_lt03lte
+#ro.product.device is used for ota check lt03ltexx
+PRODUCT_NAME := lt03ltexx
 PRODUCT_DEVICE := lt03lte
-PRODUCT_BRAND := Android
-PRODUCT_MODEL := AOSP on lt03lte
+PRODUCT_BRAND := samsung
+PRODUCT_MODEL := SM-P605
 PRODUCT_MANUFACTURER := samsung
-PRODUCT_RESTRICT_VENDOR_FILES := true
+#If true than only samsung vendor is allowed which is annoying
+PRODUCT_RESTRICT_VENDOR_FILES := false
 
 $(call inherit-product, device/samsung/lt03lte/device.mk)
 $(call inherit-product-if-exists, vendor/samsung/lt03lte/device-vendor.mk)
