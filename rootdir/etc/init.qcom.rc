@@ -240,6 +240,13 @@ on boot
     # an ack packet comes out of order
     #write /proc/sys/net/netfilter/nf_conntrack_tcp_be_liberal 1
 
+# Permissions for MDNIE
+    chown system media_rw /sys/class/mdnie/mdnie/mode
+    chown system media_rw /sys/class/mdnie/mdnie/scenario
+    chown system system   /sys/class/mdnie/mdnie/accessibility
+    chown system system   /sys/class/mdnie/mdnie/cabc
+    chown system system   /sys/class/mdnie/mdnie/bypass
+
 on post-fs-data
     write /sys/kernel/boot_adsp/boot 1
 
