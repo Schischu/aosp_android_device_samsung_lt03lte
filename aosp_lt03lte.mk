@@ -1,5 +1,5 @@
 #
-# Copyright 2014 The Android Open-Source Project
+# Copyright 2016 The Android Open-Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,15 +27,17 @@ PRODUCT_COPY_FILES += device/sample/etc/old-apns-conf.xml:system/etc/old-apns-co
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 
 #ro.product.device is used for ota check lt03ltexx
-PRODUCT_NAME := lt03ltexx
+PRODUCT_NAME := lt03lte
 PRODUCT_DEVICE := lt03lte
 PRODUCT_BRAND := samsung
 PRODUCT_MODEL := SM-P605
 PRODUCT_MANUFACTURER := samsung
+
 #If true than only samsung vendor is allowed which is annoying
 PRODUCT_RESTRICT_VENDOR_FILES := false
 
 $(call inherit-product, device/samsung/lt03lte/device.mk)
+
 $(call inherit-product-if-exists, vendor/samsung/lt03lte/device-vendor.mk)
 
 PRODUCT_NAME := aosp_lt03lte
