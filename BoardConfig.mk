@@ -33,9 +33,6 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storag
 # Audio
 BOARD_USES_ALSA_AUDIO := true
 
-
-
-
 # Shader cache config options
 # Maximum size of the  GLES Shaders that can be cached for reuse.
 # Increase the size if shaders of size greater than 12KB are used.
@@ -46,6 +43,8 @@ MAX_EGL_CACHE_KEY_SIZE := 12*1024
 # of the device.
 MAX_EGL_CACHE_SIZE := 2048*1024
 
+#Needed so copybit.msm8974.so is built
+TARGET_USES_C2D_COMPOSITION := true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
@@ -62,6 +61,7 @@ BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
 WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/dhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_AP      := "/system/etc/wifi/bcmdhd_apsta.bin"
 WIFI_DRIVER_FW_PATH_STA     := "/system/etc/wifi/bcmdhd_sta.bin"
+
 # Camera
 USE_DEVICE_SPECIFIC_CAMERA:= true
 TARGET_PROVIDES_CAMERA_HAL := true
